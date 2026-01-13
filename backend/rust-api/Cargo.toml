@@ -1,10 +1,15 @@
+[package]
+name = "vuln_scanner_api"
+version = "0.1.0"
+edition = "2021"
+
 [dependencies]
 actix-web = "4.4"
 actix-cors = "0.7"
 tokio = { version = "1.35", features = ["full"] }
 serde = { version = "1.0", features = ["derive"] }
 serde_json = "1.0"
-sqlx = { version = "0.7", features = ["runtime-tokio-rustls", "postgres"] }
+sqlx = { version = "0.7", features = ["runtime-tokio-rustls", "mysql"] }
 bcrypt = "0.15"
 jsonwebtoken = "9.2"
 uuid = { version = "1.6", features = ["v4", "serde"] }
@@ -15,3 +20,4 @@ dotenv = "0.15"
 tracing = "0.1"
 tracing-subscriber = "0.3"
 validator = { version = "0.16", features = ["derive"] }
+env_logger = "0.11"
