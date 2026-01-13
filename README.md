@@ -3,9 +3,9 @@
 VulnVault is a state-of-the-art security vulnerability scanner built for speed and memory safety. It leverages a microservices architecture to provide real-time analysis of web applications.
 
 <p align="center">
-<a href="https://www.w3schools.com/html/" target="_blank" rel="noreferrer"> <img src="https://skillicons.dev/icons?i=rust" alt="Rust" width="70" height="70"/> </a>
-<a href="https://www.w3schools.com/html/" target="_blank" rel="noreferrer"> <img src="https://skillicons.dev/icons?i=nextjs" alt="NextJs" width="70" height="70"/> </a>
-<a href="https://www.w3schools.com/html/" target="_blank" rel="noreferrer"> <img src="https://skillicons.dev/icons?i=golang" alt="GoLang" width="70" height="70"/> </a>
+<a href="https://www.w3schools.com/rust/" target="_blank" rel="noreferrer"> <img src="https://skillicons.dev/icons?i=rust" alt="Rust" width="70" height="70"/> </a>
+<a href="https://www.w3schools.com/" target="_blank" rel="noreferrer"> <img src="https://skillicons.dev/icons?i=nextjs" alt="NextJs" width="70" height="70"/> </a>
+<a href="https://www.w3schools.com/go/" target="_blank" rel="noreferrer"> <img src="https://skillicons.dev/icons?i=golang" alt="GoLang" width="70" height="70"/> </a>
 </p>
 
 ## 🚀 The "Power Stack"
