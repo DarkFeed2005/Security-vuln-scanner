@@ -1,16 +1,15 @@
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import './globals.css'
+import CyberEffects from '@/components/CyberEffects'
 
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
-  title: 'Security Vulnerability Scanner',
-  description: 'Professional security scanning tool for web applications',
+  title: 'VulnScanner - Security Vulnerability Scanner',
+  description: 'Advanced threat detection and vulnerability analysis system',
   icons: {
     icon: '/favicon.ico',
-    shortcut: '/favicon.ico',
-    apple: '/apple-icon.png',
   },
 }
 
@@ -21,7 +20,10 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+      <body className={inter.className}>
+        <CyberEffects />
+        {children}
+      </body>
     </html>
   )
 }
