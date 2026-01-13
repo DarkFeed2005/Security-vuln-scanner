@@ -6,6 +6,8 @@ VulnVault is a state-of-the-art security vulnerability scanner built for speed a
 <a href="https://www.w3schools.com/rust/" target="_blank" rel="noreferrer"> <img src="https://skillicons.dev/icons?i=rust" alt="Rust" width="70" height="70"/> </a>
 <a href="https://www.w3schools.com/" target="_blank" rel="noreferrer"> <img src="https://skillicons.dev/icons?i=nextjs" alt="NextJs" width="70" height="70"/> </a>
 <a href="https://www.w3schools.com/go/" target="_blank" rel="noreferrer"> <img src="https://skillicons.dev/icons?i=golang" alt="GoLang" width="70" height="70"/> </a>
+<a href="https://www.w3schools.com/go/" target="_blank" rel="noreferrer"> <img src="https://skillicons.dev/icons?i=typescript" alt="TypeScript" width="70" height="70"/> </a>
+<a href="https://www.w3schools.com/go/" target="_blank" rel="noreferrer"> <img src="https://skillicons.dev/icons?i=tailwind" alt="tailwind" width="70" height="70"/> </a>
 </p>
 
 ## 🚀 The "Power Stack"
