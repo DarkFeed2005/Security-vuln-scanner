@@ -1,33 +1,29 @@
-# Build stage
-FROM golang:1.21-alpine AS builder
+FROM golang:1.25-alpine AS builder
 
 WORKDIR /app
 
 # Copy go mod files
-COPY go.mod go.sum* ./
-
-# Download dependencies
-RUN go mod download || true
+COPY go.mod ./
+RUN go mod download 2>/dev/null || true
 
 # Copy source code
 COPY . .
 
-# Build the application
-RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o port-scanner .
+# Build
+RUN go build -o port-scanner .
 
-# Runtime stage
+# Final stage
 FROM alpine:latest
+
+WORKDIR /app
 
 RUN apk --no-cache add ca-certificates
 
-WORKDIR /root/
-
-# Copy the binary from builder
+# Copy binary
 COPY --from=builder /app/port-scanner .
 
-# Expose port
+RUN chmod +x port-scanner
+
 EXPOSE 8081
 
-# Run the binary
 CMD ["./port-scanner"]
-
