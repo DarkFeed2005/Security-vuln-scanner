@@ -1,0 +1,97 @@
+services:
+  # MySQL Database
+  mysql:
+    image: mysql:8.0
+    container_name: vuln-scanner-mysql
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-rootpassword}
+      MYSQL_DATABASE: vuln_scanner
+      MYSQL_USER: ${MYSQL_USER:-scanner_user}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD:-secure_password}
+    ports:
+      - "3307:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ./backend/migrations:/docker-entrypoint-initdb.d
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-p${MYSQL_ROOT_PASSWORD:-rootpassword}"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 30s
+    networks:
+      - vuln-scanner-network
+
+  # Rust API
+  rust-api:
+    build:
+      context: ./backend/rust-api
+      dockerfile: Dockerfile
+    container_name: vuln-scanner-rust-api
+    restart: unless-stopped
+    ports:
+      - "8080:8080"
+    environment:
+      DATABASE_URL: mysql://${MYSQL_USER:-scanner_user}:${MYSQL_PASSWORD:-secure_password}@mysql:3306/vuln_scanner
+      JWT_SECRET: ${JWT_SECRET:-your-super-secret-key-change-in-production-12345}
+      RUST_LOG: ${RUST_LOG:-info}
+      FRONTEND_URL: http://localhost:3000
+    depends_on:
+      mysql:
+        condition: service_healthy
+    networks:
+      - vuln-scanner-network
+    healthcheck:
+      test: ["CMD-SHELL", "timeout 1s bash -c ':> /dev/tcp/127.0.0.1/8080' || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 40s
+
+      
+
+  # Go Port Scanner
+  go-port-scanner:
+    build:
+      context: ./backend/go-services/port-scanner
+      dockerfile: Dockerfile
+    container_name: vuln-scanner-port-scanner
+    restart: unless-stopped
+    ports:
+      - "8081:8081"
+    networks:
+      - vuln-scanner-network
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost:8081/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # Next.js Frontend
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: vuln-scanner-frontend
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    environment:
+      NEXT_PUBLIC_API_URL: http://localhost:8080
+      NEXT_PUBLIC_WS_URL: ws://localhost:8080
+    depends_on:
+      rust-api:
+        condition: service_healthy
+      go-port-scanner:
+        condition: service_started
+    networks:
+      - vuln-scanner-network
+
+volumes:
+  mysql_data:
+    driver: local
+
+networks:
+  vuln-scanner-network:
+    driver: bridge
