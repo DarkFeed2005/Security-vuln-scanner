@@ -1,4 +1,23 @@
+```
 target/
-Cargo.lock
 .env
 *.log
+.git
+.gitignore
+```
+
+Create `backend/go-services/port-scanner/.dockerignore`:
+```
+port-scanner
+*.exe
+.git
+```
+
+Create `frontend/.dockerignore`:
+```
+node_modules
+.next
+.git
+.gitignore
+npm-debug.log*
+.env*.local
